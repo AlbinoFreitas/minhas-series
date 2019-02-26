@@ -4,13 +4,20 @@
     <div class="container">
     <div class="row">
         <div class="col-lg-8 mx-auto">
-        <h2>Series</h2>
-        <p class="lead">Uma headline aqui</p>
-        <ul>
+        <h2>Séries</h2>
+        <p>Suas séries cadastradas <a href="/series/nova" class="btn btn-primary">Nova</a></p>
+        <table class="table table-hover">
+            <tr>
+                <th>Nome</th>
+                <th>Status</th>
+            </tr>
             <% series.forEach(serie => { %>
-                <li><%= serie.name %> - <%= serie.status %></li>
+                <tr>
+                    <td><%= serie.name %></td>
+                    <td><%= serie.status %></td>
+                </tr>
             <% }) %>
-        </ul>
+        </table>
         </div>
     </div>
     </div>
