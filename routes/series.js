@@ -9,7 +9,13 @@ const models = {
 }
 
 router.get('/', seriesController.index.bind(null, models))
-router.post('/nova', seriesController.novaProccess.bind(null, models))
+
 router.get('/nova', seriesController.novaForm)
+router.post('/nova', seriesController.novaProccess.bind(null, models))
+
+router.get('/editar/:id', seriesController.editaForm.bind(null, models))
+router.post('/editar/:id', seriesController.editaProccess.bind(null, models))
+
+router.get('/excluir/:id', seriesController.excluir.bind(null, models))
 
 module.exports = router

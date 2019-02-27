@@ -10,11 +10,18 @@
             <tr>
                 <th>Nome</th>
                 <th>Status</th>
+                <th></th>
             </tr>
             <% series.forEach(serie => { %>
                 <tr>
                     <td><%= serie.name %></td>
-                    <td><%= serie.status %></td>
+                    <td>
+                        <%= labels.filter(label => label.id == serie.status)[0].name %>
+                    </td>
+                    <td>
+                        <a href="/series/editar/<%= serie._id %>">Editar</a> |
+                        <a href="/series/excluir/<%= serie._id %>">Excluir</a>
+                    </td>
                 </tr>
             <% }) %>
         </table>

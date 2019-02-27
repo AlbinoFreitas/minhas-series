@@ -1,0 +1,30 @@
+<% include ../partials/header %>
+
+<section id="nova">
+    <div class="container">
+    <div class="row">
+        <div class="col-lg-8 mx-auto">
+        <h2>Nova Série</h2>
+            <form method="post">
+                <div class="form-group">
+                    <label for="name">Nome</label>
+                    <input type="text" class="form-control" id="name" name="name" value="<%= serie.name %>" aria-describedby="nameHelp" placeholder="Insira o nome" required>
+                    <small id="namelHelp" class="form-text text-muted">Digite o nome da série que deseja cadastrar</small>
+                </div>
+                <div class="form-group">
+                    <label for="status">Situação:</label>
+                    <select class="form-control" id="status" name="status">
+                        <% labels.forEach( label => { %>
+                            <% let selected = (label.id == serie.status ) ? "selected" : ""%>
+                            <option value="<%= label.id %>" <%= selected %>> <%= label.name %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Enviar</button>
+            </form>
+        </div>
+    </div>
+    </div>
+</section>
+
+<% include ../partials/footer %></section>
