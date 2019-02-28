@@ -10,19 +10,26 @@ const index = async ({ Serie }, req, res) => {
 }
 
 const novaForm = (req, res) => {
-    res.render('series/nova')
+    res.render('series/nova', { errors: null})
 }
 
 const novaProccess = async ({ Serie }, req, res) => {
     const serie = new Serie(req.body)
-    await serie.save()
+    
+    try{
+        await serie.save()
+        res.redirect('/series')
+    }catch(e){
+        res.render('series/nova', { 
+            errors: Object.keys(e.errors)
+        })
+    }
 
-    res.redirect('/series')
 }
 
 const editaForm = async ({ Serie }, req, res) => {
     const serie = await Serie.findOne({ _id: req.params.id })
-    res.render('series/editar', { serie, labels })
+    res.render('series/editar', { serie, labels , errors: null})
 }
 
 const editaProccess = async ({ Serie }, req, res) => {
@@ -30,9 +37,17 @@ const editaProccess = async ({ Serie }, req, res) => {
     
     serie.name      = req.body.name
     serie.status    = req.body.status
-    await serie.save()
-    
-    res.redirect('/series')
+
+    try{
+        await serie.save()
+        res.redirect('/series')
+    }catch(e){
+        res.render('series/editar', { 
+            serie, 
+            labels , 
+            errors: Object.keys(e.errors)
+        })
+    }
 }
 
 const excluir = async ({ Serie }, req, res) => {
