@@ -4,56 +4,40 @@ const labels = [
     { id: 'watched',  name: 'Assistido'}
 ]
 
-const index = ({ Serie }, req, res) => {
-    Serie.find({}).then(series => {
-        res.render('series/index', { series, labels })
-    }).catch(err => {
-        res.render('error', { err })
-    })
+const index = async ({ Serie }, req, res) => {
+    const series = await Serie.find({})
+    res.render('series/index', { series, labels })
 }
 
 const novaForm = (req, res) => {
     res.render('series/nova')
 }
 
-const novaProccess = ({ Serie }, req, res) => {
+const novaProccess = async ({ Serie }, req, res) => {
     const serie = new Serie(req.body)
+    await serie.save()
 
-    serie.save().then(() => {
-        res.redirect('/series')
-    })
+    res.redirect('/series')
 }
 
-const editaForm = ({ Serie }, req, res) => {
-    Serie.findOne({ _id: req.params.id }, (err, serie) => {
-        if(err){
-            console.log(err)
-        }
-        res.render('series/editar', { serie, labels })
-    })
+const editaForm = async ({ Serie }, req, res) => {
+    const serie = await Serie.findOne({ _id: req.params.id })
+    res.render('series/editar', { serie, labels })
 }
 
-const editaProccess = ({ Serie }, req, res) => {
-    Serie.findOne({ _id: req.params.id }, (err, serie) => {
-        if(err){
-            console.log(err)
-        }else{
-            serie.name = req.body.name
-            serie.status = req.body.status
-            serie.save()
-            res.redirect('/series')
-        }
-    })
-
+const editaProccess = async ({ Serie }, req, res) => {
+    const serie     = await Serie.findOne({ _id: req.params.id })
+    
+    serie.name      = req.body.name
+    serie.status    = req.body.status
+    await serie.save()
+    
+    res.redirect('/series')
 }
 
-const excluir = ({ Serie }, req, res) => {
-    Serie.deleteOne({ _id: req.params.id }, (err) => {
-        if(err){
-            console.log(err)
-        }
-        res.redirect('/series')
-    })
+const excluir = async ({ Serie }, req, res) => {
+    await Serie.deleteOne({ _id: req.params.id })
+    res.redirect('/series')
 }
 
 module.exports = {
