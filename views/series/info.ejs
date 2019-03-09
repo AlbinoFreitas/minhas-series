@@ -1,0 +1,23 @@
+<% include ../partials/header %>
+
+<section id="nova">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto">
+            <h2>Sobre <%= serie.name %></h2>
+                <form method="post">
+                    <div class="form-group">
+                        <textarea class="form-control" name="comment" id="comment" rows="5"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Enviar</button>
+                </form>
+                <br />
+                <% serie.coments.forEach(comment => { %>
+                    <div class="card col-12"><%= comment %></div>
+                <% }) %>
+            </div>
+        </div>
+    </div>
+</section>
+
+<% include ../partials/footer %></section>

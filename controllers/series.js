@@ -55,6 +55,16 @@ const excluir = async ({ Serie }, req, res) => {
     res.redirect('/series')
 }
 
+const info = async ({ Serie }, req, res) => {
+    const serie = await Serie.findOne({ _id: req.params.id })
+    res.render('series/info', { serie, labels })
+}
+
+const addComentario = async ({ Serie }, req, res) => {
+    await Serie.updateOne({ _id: req.params.id }, { $push: { coments: req.body.comment}})
+    res.redirect('/series/info/'+req.params.id)
+}
+
 module.exports = {
-    index, novaForm, novaProccess, editaForm, editaProccess, excluir
+    index, novaForm, novaProccess, editaForm, editaProccess, excluir, info, addComentario
 }
