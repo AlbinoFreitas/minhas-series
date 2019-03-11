@@ -17,3 +17,8 @@ header {
 section {
   padding: 150px 0;
 }
+
+.comment {
+  border-bottom: 1px dashed #ccc; 
+  padding-top: 8px;
+}
